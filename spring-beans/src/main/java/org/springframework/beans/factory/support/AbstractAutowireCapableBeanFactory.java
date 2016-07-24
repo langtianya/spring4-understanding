@@ -279,12 +279,14 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
 	//-------------------------------------------------------------------------
 	// Typical methods for creating and populating external bean instances
+	//用于创建和填充外部bean实例的典型方法
 	//-------------------------------------------------------------------------
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public <T> T createBean(Class<T> beanClass) throws BeansException {
 		// Use prototype bean definition, to avoid registering bean as dependent bean.
+		//使用原型bean的定义，以避免注册bean作为依赖豆
 		RootBeanDefinition bd = new RootBeanDefinition(beanClass);
 		bd.setScope(SCOPE_PROTOTYPE);
 		bd.allowCaching = ClassUtils.isCacheSafe(beanClass, getBeanClassLoader());
@@ -1143,7 +1145,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		return new ConstructorResolver(this).autowireConstructor(beanName, mbd, ctors, explicitArgs);
 	}
 
-	/**
+	/**用属性值在给定的BeanWrapper中填充bean实例<br/>
 	 * Populate the bean instance in the given BeanWrapper with the property values
 	 * from the bean definition.
 	 * @param beanName the name of the bean
@@ -1184,11 +1186,13 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		if (!continueWithPropertyPopulation) {
 			return;
 		}
-
+		//如果有配置自动装配，那么先进行
 		if (mbd.getResolvedAutowireMode() == RootBeanDefinition.AUTOWIRE_BY_NAME ||
 				mbd.getResolvedAutowireMode() == RootBeanDefinition.AUTOWIRE_BY_TYPE) {
+			
 			MutablePropertyValues newPvs = new MutablePropertyValues(pvs);
 
+			//如果适用基于by name自动装配，添加属性值
 			// Add property values based on autowire by name if applicable.
 			if (mbd.getResolvedAutowireMode() == RootBeanDefinition.AUTOWIRE_BY_NAME) {
 				autowireByName(beanName, mbd, bw, newPvs);
@@ -1237,7 +1241,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 	 */
 	protected void autowireByName(
 			String beanName, AbstractBeanDefinition mbd, BeanWrapper bw, MutablePropertyValues pvs) {
-
+//获取当前bean的属性名
 		String[] propertyNames = unsatisfiedNonSimpleProperties(mbd, bw);
 		for (String propertyName : propertyNames) {
 			if (containsBean(propertyName)) {
@@ -1324,8 +1328,10 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		PropertyValues pvs = mbd.getPropertyValues();
 		PropertyDescriptor[] pds = bw.getPropertyDescriptors();
 		for (PropertyDescriptor pd : pds) {
+//			获取用于写值的方法，并且
 			if (pd.getWriteMethod() != null && !isExcludedFromDependencyCheck(pd) && !pvs.contains(pd.getName()) &&
 					!BeanUtils.isSimpleProperty(pd.getPropertyType())) {
+				
 				result.add(pd.getName());
 			}
 		}
@@ -1376,10 +1382,15 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 	}
 
 	/**
+	 * 
+确定给定的bean属性是否被排除在依赖性检查之外。
+这个实现排除属性由CGLI定义，并且属性的类型匹配一个被忽略的依赖类型或是由一个被忽略的依赖接口定义的。
+<p>
 	 * Determine whether the given bean property is excluded from dependency checks.
 	 * <p>This implementation excludes properties defined by CGLIB and
 	 * properties whose type matches an ignored dependency type or which
 	 * are defined by an ignored dependency interface.
+	 * 
 	 * @param pd the PropertyDescriptor of the bean property
 	 * @return whether the bean property is excluded
 	 * @see #ignoreDependencyType(Class)
@@ -1392,13 +1403,21 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 	}
 
 	/**
-	 * Perform a dependency check that all properties exposed have been set,
-	 * if desired. Dependency checks can be objects (collaborating beans),
-	 * simple (primitives and String), or all (both).
-	 * @param beanName the name of the bean
-	 * @param mbd the merged bean definition the bean was created with
-	 * @param pds the relevant property descriptors for the target bean
-	 * @param pvs the property values to be applied to the bean
+	 * 
+	 * 执行一个依赖性检查，所有已曝光的属性已被设置
+	 * <p>
+	 * Perform a dependency check that all properties exposed have been set, if
+	 * desired. Dependency checks can be objects (collaborating beans), simple
+	 * (primitives and String), or all (both).
+	 * 
+	 * @param beanName
+	 *            the name of the bean
+	 * @param mbd
+	 *            the merged bean definition the bean was created with
+	 * @param pds
+	 *            the relevant property descriptors for the target bean
+	 * @param pvs
+	 *            the property values to be applied to the bean
 	 * @see #isExcludedFromDependencyCheck(java.beans.PropertyDescriptor)
 	 */
 	protected void checkDependencies(
@@ -1407,11 +1426,15 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
 		int dependencyCheck = mbd.getDependencyCheck();
 		for (PropertyDescriptor pd : pds) {
+			
 			if (pd.getWriteMethod() != null && !pvs.contains(pd.getName())) {
+				
 				boolean isSimple = BeanUtils.isSimpleProperty(pd.getPropertyType());
+				
 				boolean unsatisfied = (dependencyCheck == RootBeanDefinition.DEPENDENCY_CHECK_ALL) ||
 						(isSimple && dependencyCheck == RootBeanDefinition.DEPENDENCY_CHECK_SIMPLE) ||
 						(!isSimple && dependencyCheck == RootBeanDefinition.DEPENDENCY_CHECK_OBJECTS);
+				// 不满足，抛异常
 				if (unsatisfied) {
 					throw new UnsatisfiedDependencyException(mbd.getResourceDescription(), beanName, pd.getName(),
 							"Set this property value or disable dependency checking for this bean.");

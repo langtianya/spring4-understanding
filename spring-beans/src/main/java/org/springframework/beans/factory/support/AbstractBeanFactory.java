@@ -115,7 +115,8 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 	/** Parent bean factory, for bean inheritance support */
 	private BeanFactory parentBeanFactory;
 
-	/** ClassLoader to resolve bean class names with, if necessary */
+	/** 类加载器解决bean类的名称，如果有必要的话
+	 * ClassLoader to resolve bean class names with, if necessary */
 	private ClassLoader beanClassLoader = ClassUtils.getDefaultClassLoader();
 
 	/** ClassLoader to temporarily resolve bean class names with, if necessary */
@@ -144,7 +145,8 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 	/** String resolvers to apply e.g. to annotation attribute values */
 	private final List<StringValueResolver> embeddedValueResolvers = new LinkedList<StringValueResolver>();
 
-	/** BeanPostProcessors to apply in createBean */
+	/** 被应用到这个工厂创建的bean的beanpostprocessors列表<br/>
+	 * BeanPostProcessors to apply in createBean */
 	private final List<BeanPostProcessor> beanPostProcessors = new ArrayList<BeanPostProcessor>();
 
 	/** Indicates whether any InstantiationAwareBeanPostProcessors have been registered */
@@ -828,7 +830,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 		return this.beanPostProcessors.size();
 	}
 
-	/**
+	/**返回将被应用到这个工厂创建的bean的beanpostprocessors列表<br/>
 	 * Return the list of BeanPostProcessors that will get applied
 	 * to beans created with this factory.
 	 */

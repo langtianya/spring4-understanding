@@ -494,7 +494,10 @@ public abstract class BeanUtils {
 		}
 	}
 
-	/**
+	/**如果是简单类型属性，返回true
+	 * 检查给定的类型是否是一个“简单”的属性：原始类型，字符串或字符序列，一个数字，一个Date，一个URI，一个URL，一个Locale，一个Class，
+	 * 或相应的阵列。用于确定“简单”依赖性检查的属性。
+<p>
 	 * Check if the given type represents a "simple" property:
 	 * a primitive, a String or other CharSequence, a Number, a Date,
 	 * a URI, a URL, a Locale, a Class, or a corresponding array.

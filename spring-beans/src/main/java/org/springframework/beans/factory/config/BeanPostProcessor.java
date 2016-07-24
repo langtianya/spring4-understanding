@@ -19,6 +19,12 @@ package org.springframework.beans.factory.config;
 import org.springframework.beans.BeansException;
 
 /**
+ * 允许对新的bean实例进行自定义修改的工厂钩子，例如检查标记接口或用代理服务器将它们包装起来。
+ApplicationContexts可以自动BeanPostProcessor豆bean定义和应用到随后创建的任何豆。普通
+的豆工厂允许后处理器的编程注册，适用于通过这家工厂创建的所有豆类。
+通常，后处理器，填充豆通过标记接口或喜欢将实施postprocessbeforeinitialization，后处理器
+，包豆代理通常会实现postprocessafterinitialization。
+<p>
  * Factory hook that allows for custom modification of new bean instances,
  * e.g. checking for marker interfaces or wrapping them with proxies.
  *

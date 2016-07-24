@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.BeanMetadataAttributeAccessor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -56,6 +57,7 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 		implements BeanDefinition, Cloneable {
 
 	/**
+	 * 默认范围，“”等效于singleton，除非
 	 * Constant for the default scope name: {@code ""}, equivalent to singleton
 	 * status unless overridden from a parent bean definition (if applicable).
 	 */
@@ -96,25 +98,27 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	public static final int AUTOWIRE_AUTODETECT = AutowireCapableBeanFactory.AUTOWIRE_AUTODETECT;
 
 	/**
+	 * 默认检索模式：没有依赖性检查
 	 * Constant that indicates no dependency check at all.
 	 * @see #setDependencyCheck
 	 */
 	public static final int DEPENDENCY_CHECK_NONE = 0;
 
-	/**
+	/**检测对象
 	 * Constant that indicates dependency checking for object references.
 	 * @see #setDependencyCheck
 	 */
 	public static final int DEPENDENCY_CHECK_OBJECTS = 1;
 
-	/**
+	/**是否检测简单类型。
+	 * see BeanUtils.isSimpleProperty(pd.getPropertyType());
 	 * Constant that indicates dependency checking for "simple" properties.
 	 * @see #setDependencyCheck
 	 * @see org.springframework.beans.BeanUtils#isSimpleProperty
 	 */
 	public static final int DEPENDENCY_CHECK_SIMPLE = 2;
 
-	/**
+	/**检测所有属性
 	 * Constant that indicates dependency checking for all properties
 	 * (object references as well as "simple" properties).
 	 * @see #setDependencyCheck
@@ -134,8 +138,14 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	public static final String INFER_METHOD = "(inferred)";
 
 
+	/**
+	 * bean对象对应的类
+	 */
 	private volatile Object beanClass;
 
+	/**
+	 * 作用范围
+	 */
 	private String scope = SCOPE_DEFAULT;
 
 	private boolean abstractFlag = false;
@@ -144,6 +154,9 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 
 	private int autowireMode = AUTOWIRE_NO;
 
+	/**
+	 * 依赖性检查 模式
+	 */
 	private int dependencyCheck = DEPENDENCY_CHECK_NONE;
 
 	private String[] dependsOn;
@@ -540,7 +553,7 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 		this.dependencyCheck = dependencyCheck;
 	}
 
-	/**
+	/**依赖性检查 模式
 	 * Return the dependency check code.
 	 */
 	public int getDependencyCheck() {
@@ -713,7 +726,7 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 		this.propertyValues = (propertyValues != null ? propertyValues : new MutablePropertyValues());
 	}
 
-	/**
+	/**返回此bean的属性值（从来没有空）。<br/>
 	 * Return property values for this bean (never {@code null}).
 	 */
 	@Override
@@ -833,6 +846,7 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	}
 
 	/**
+	 * 返回这个bean定义是否是“合成”的，即，没有由应用程序本身定义
 	 * Return whether this bean definition is 'synthetic', that is,
 	 * not defined by the application itself.
 	 */
@@ -891,6 +905,9 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 		this.resource = new DescriptiveResource(resourceDescription);
 	}
 
+	/**返回此资源的描述，用于在与resource工作时的错误输出。也鼓励他们实现toString方法返回这个值。
+	 * @see org.springframework.beans.factory.config.BeanDefinition#getResourceDescription()
+	 */
 	@Override
 	public String getResourceDescription() {
 		return (this.resource != null ? this.resource.getDescription() : null);

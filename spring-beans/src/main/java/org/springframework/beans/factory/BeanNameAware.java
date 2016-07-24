@@ -17,6 +17,12 @@
 package org.springframework.beans.factory;
 
 /**
+ * 
+
+给想要意识到它在bean工厂的bean名的bean去实现的接口，它通常不建议一个对
+象依赖它的bean称，因为这代表一个潜在的脆性对外部配置的依赖，以及可能不必要的
+依赖于一个 Spring API。 
+<p>
  * Interface to be implemented by beans that want to be aware of their
  * bean name in a bean factory. Note that it is not usually recommended
  * that an object depend on its bean name, as this represents a potentially

@@ -21,6 +21,10 @@ import org.springframework.beans.MutablePropertyValues;
 import org.springframework.core.AttributeAccessor;
 
 /**
+ * 一个BeanDefinition描述一个bean实例，具有属性值，构造函数的参数值，并具体的实现提供更多的信息。
+这只是一个最小的接口：主要的意图是让一个beanfactorypostprocessor如PropertyPlaceholderConfigurer内省
+和修改属性值和其他bean元数据。
+<p>
  * A BeanDefinition describes a bean instance, which has property values,
  * constructor argument values, and further information supplied by
  * concrete implementations.

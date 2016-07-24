@@ -140,7 +140,8 @@ public abstract class ClassUtils {
 		}
 	}
 
-	/**
+	/**返回默认ClassLoader，通常是线程上下文ClassLoader
+	 * <p>
 	 * Return the default ClassLoader to use: typically the thread context
 	 * ClassLoader, if available; the ClassLoader that loaded the ClassUtils
 	 * class will be used as fallback.
@@ -157,21 +158,26 @@ public abstract class ClassUtils {
 	public static ClassLoader getDefaultClassLoader() {
 		ClassLoader cl = null;
 		try {
+			// Returns the context ClassLoader for this Thread.
 			cl = Thread.currentThread().getContextClassLoader();
-		}
-		catch (Throwable ex) {
+		} catch (Throwable ex) {
+			// 不能访问线程上下文ClassLoader-回滚
 			// Cannot access thread context ClassLoader - falling back...
 		}
 		if (cl == null) {
+			// 线程上下文ClassLoader获取不到时，使用本类的class loader
 			// No thread context class loader -> use class loader of this class.
 			cl = ClassUtils.class.getClassLoader();
 			if (cl == null) {
-				// getClassLoader() returning null indicates the bootstrap ClassLoader
+				// 获取得到null，代表是bootstrap ClassLoader
+				// getClassLoader() returning null indicates the bootstrap
+				// ClassLoader
 				try {
 					cl = ClassLoader.getSystemClassLoader();
-				}
-				catch (Throwable ex) {
-					// Cannot access system ClassLoader - oh well, maybe the caller can live with null...
+				} catch (Throwable ex) {
+					// 只能返回null
+					// Cannot access system ClassLoader - oh well, maybe the
+					// caller can live with null...
 				}
 			}
 		}

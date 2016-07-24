@@ -18,7 +18,7 @@ package org.springframework.beans;
 
 import java.beans.PropertyDescriptor;
 
-/**
+/**Spring's的低级别的JavaBeans基础设施中心接口<br/>
  * The central interface of Spring's low-level JavaBeans infrastructure.
  *
  * <p>Typically not used directly but rather implicitly via a
@@ -61,7 +61,12 @@ public interface BeanWrapper extends ConfigurablePropertyAccessor {
 	 */
 	Class<?> getWrappedClass();
 
+
 	/**
+	 * 获得包装对象的propertydescriptors（作为通过标准JavaBeans自省确定）。
+	 * <p>
+	 * PropertyDescriptor：（jdk）描述通过一个java bean的一对访问方法导出的一个属性。
+	 * <p>
 	 * Obtain the PropertyDescriptors for the wrapped object
 	 * (as determined by standard JavaBeans introspection).
 	 * @return the PropertyDescriptors for the wrapped object

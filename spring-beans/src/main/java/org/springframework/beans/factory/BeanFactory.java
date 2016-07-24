@@ -20,6 +20,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.core.ResolvableType;
 
 /**
+   用于访问Spring bean 容器的根接口
  * The root interface for accessing a Spring bean container.
  * This is the basic client view of a bean container;
  * further interfaces such as {@link ListableBeanFactory} and
@@ -64,6 +65,8 @@ import org.springframework.core.ResolvableType;
  *
  * <p>Bean factory implementations should support the standard bean lifecycle interfaces
  * as far as possible. The full set of initialization methods and their standard order is:<br>
+ * Bean工厂的实现应该尽可能支持标准的Bean生命周期接口。全套的初始化方法和他们的标准顺序是（声明周期）:<br>
+ * 
  * 1. BeanNameAware's {@code setBeanName}<br>
  * 2. BeanClassLoaderAware's {@code setBeanClassLoader}<br>
  * 3. BeanFactoryAware's {@code setBeanFactory}<br>
@@ -83,6 +86,7 @@ import org.springframework.core.ResolvableType;
  * 12. {@code postProcessAfterInitialization} methods of BeanPostProcessors
  *
  * <p>On shutdown of a bean factory, the following lifecycle methods apply:<br>
+ * 
  * 1. DisposableBean's {@code destroy}<br>
  * 2. a custom destroy-method definition
  *

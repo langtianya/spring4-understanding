@@ -111,7 +111,9 @@ public abstract class AbstractRefreshableApplicationContext extends AbstractAppl
 	}
 
 
-	/**
+	/**此实现执行此上下文的底层bean factory的实际刷新。
+	 * 关闭以前的bean工厂（如果有的话）和初始化的上下文的生命周期的下一阶段的新鲜bean工厂
+	 * <p>
 	 * This implementation performs an actual refresh of this context's underlying
 	 * bean factory, shutting down the previous bean factory (if any) and
 	 * initializing a fresh bean factory for the next phase of the context's lifecycle.

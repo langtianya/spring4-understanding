@@ -17,6 +17,7 @@
 package org.springframework.beans;
 
 /**
+ * 包含一个或更多PropertyValue对象，通常包括特定目标bean的一个更新。
  * Holder containing one or more {@link PropertyValue} objects,
  * typically comprising one update for a specific target bean.
  *
