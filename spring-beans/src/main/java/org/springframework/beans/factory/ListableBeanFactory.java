@@ -54,7 +54,7 @@ import org.springframework.core.ResolvableType;
  * @see HierarchicalBeanFactory
  * @see BeanFactoryUtils
  */
-public interface ListableBeanFactory extends BeanFactory {
+public interface ListableBeanFactory extends  {
 
 	/**
 	 * Check if this bean factory contains a bean definition with the given name.

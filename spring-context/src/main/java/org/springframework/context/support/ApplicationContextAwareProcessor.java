@@ -44,7 +44,10 @@ import org.springframework.util.StringValueResolver;
  *
  * <p>Application contexts will automatically register this with their
  * underlying bean factory. Applications do not use this directly.
- *
+ *<p>
+ *在上面提到的顺序，实现的接口是满意的。
+应用程序上下文将自动注册这与他们的底层的bean工厂。应用程序不直接使用这个。
+*对bean实现的aware方法进行回调
  * @author Juergen Hoeller
  * @author Costin Leau
  * @author Chris Beams
@@ -78,6 +81,7 @@ class ApplicationContextAwareProcessor implements BeanPostProcessor {
 				(bean instanceof EnvironmentAware || bean instanceof EmbeddedValueResolverAware ||
 						bean instanceof ResourceLoaderAware || bean instanceof ApplicationEventPublisherAware ||
 						bean instanceof MessageSourceAware || bean instanceof ApplicationContextAware)) {
+			
 			acc = this.applicationContext.getBeanFactory().getAccessControlContext();
 		}
 
@@ -97,6 +101,9 @@ class ApplicationContextAwareProcessor implements BeanPostProcessor {
 		return bean;
 	}
 
+	/**对bean实现的aware方法进行回调
+	 * @param bean
+	 */
 	private void invokeAwareInterfaces(Object bean) {
 		if (bean instanceof Aware) {
 			if (bean instanceof EnvironmentAware) {

@@ -28,4 +28,5 @@ include "spring-framework-bom"
 
 // Exposes gradle buildSrc for IDE support
 include "buildSrc"
+//查找项目目录下名字为buildSrc的文件夹，并将其命名为spring-build-src
 rootProject.children.find{ it.name == "buildSrc" }.name = "spring-build-src"

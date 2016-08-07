@@ -22,6 +22,9 @@ import java.net.URI;
 import java.net.URL;
 
 /**
+ * 从底层资源的实际类型抽象的资源描述符的接口，如文件或类路径资源。
+  如果物理形态存在可以为每个资源打开一个InputStream，但一个URL或文件处理，仅可以返回确切的资源。实际行为是由具体实现决定。
+<p>
  * Interface for a resource descriptor that abstracts from the actual
  * type of underlying resource, such as a file or class path resource.
  *
@@ -125,13 +128,14 @@ public interface Resource extends InputStreamSource {
 	String getFilename();
 
 	/**
-	 * 返回此资源的描述，用于在与resource工作时的错误输出。
-也鼓励他们实现toString方法返回这个值。
-<p>
-	 * Return a description for this resource,
-	 * to be used for error output when working with the resource.
-	 * <p>Implementations are also encouraged to return this value
-	 * from their {@code toString} method.
+	 * 返回此资源的描述，用于在与resource工作时的错误输出。 也鼓励他们实现toString方法返回这个值。
+	 * <p>
+	 * Return a description for this resource, to be used for error output when
+	 * working with the resource.
+	 * <p>
+	 * Implementations are also encouraged to return this value from their
+	 * {@code toString} method.
+	 * 
 	 * @see Object#toString()
 	 */
 	String getDescription();

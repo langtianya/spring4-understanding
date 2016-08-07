@@ -18,7 +18,12 @@ package org.springframework.core.io;
 
 import org.springframework.util.ResourceUtils;
 
-/**
+/**策略模式.
+ * 加载资源的策略接口（例如：类路径或文件系统资源）。一个org.springframework.context.ApplicationContext
+ * 需要提供这一功能，加上扩展org.springframework.core.io.support.resourcepatternresolver支持。
+DefaultResourceLoader是一个独立的实现，可在ApplicationContext外使用，也可以被resourceeditor使用。
+在ApplicationContext运行时资源类型和资源数组的bean属性可以填充字符串，使用特定的上下文的资源加载策略。
+<p>
  * Strategy interface for loading resources (e.. class path or file system
  * resources). An {@link org.springframework.context.ApplicationContext}
  * is required to provide this functionality, plus extended
@@ -40,7 +45,8 @@ import org.springframework.util.ResourceUtils;
  */
 public interface ResourceLoader {
 
-	/** Pseudo URL prefix for loading from the class path: "classpath:" */
+	/**从类路径"classpath:"加载的伪路径前缀
+	 *  Pseudo URL prefix for loading from the class path: "classpath:" */
 	String CLASSPATH_URL_PREFIX = ResourceUtils.CLASSPATH_URL_PREFIX;
 
 
@@ -66,6 +72,9 @@ public interface ResourceLoader {
 	Resource getResource(String location);
 
 	/**
+	 * 暴露本ResourceLoader使用的ClassLoader。
+	需要直接访问ClassLoader的客户可以这样做，在一个统一的ResourceLoader， 而不是依赖于线程上下文类加载器
+	<p>
 	 * Expose the ClassLoader used by this ResourceLoader.
 	 * <p>Clients which need to access the ClassLoader directly can do so
 	 * in a uniform manner with the ResourceLoader, rather than relying

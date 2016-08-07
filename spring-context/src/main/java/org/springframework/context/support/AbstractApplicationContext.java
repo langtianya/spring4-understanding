@@ -189,7 +189,8 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	/** Reference to the JVM shutdown hook, if registered */
 	private Thread shutdownHook;
 
-	/** ResourcePatternResolver used by this context */
+	/** 上下文使用的资源模式解析器
+	 * ResourcePatternResolver used by this context */
 	private ResourcePatternResolver resourcePatternResolver;
 
 	/** LifecycleProcessor for managing the lifecycle of beans within this context */
