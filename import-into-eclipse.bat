@@ -1,6 +1,9 @@
 @echo off
 set STS_TEST_VERSION='2.9.2.RELEASE'
 
+REM %0代指批处理文件自身
+REM %~d0 是指批处理所在的盘符
+REM %~dp0 是盘符加路径
 set CURRENT_DIR=%~dp0
 cd %CURRENT_DIR%
 
@@ -30,6 +33,7 @@ REM - generates metadata for all subprojects
 REM - skips metadata gen for the root project (-x :eclipse) to work
 REM   around Eclipse's inability to import hierarchical project structures
 REM SET COMMAND="./gradlew cleanEclipse :spring-oxm:compileTestJava eclipse -x :eclipse"
+REM 设置变量COMMAND
 SET COMMAND=gradlew cleanEclipse :spring-oxm:compileTestJava eclipse -x :eclipse
 
 echo.

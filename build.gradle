@@ -1,7 +1,10 @@
+//构建脚本
 buildscript {
+//远程库
 	repositories {
 		maven { url "https://repo.spring.io/plugins-release" }
 	}
+	//依赖的插件
 	dependencies {
 		classpath("org.springframework.build.gradle:propdeps-plugin:0.0.7")
 		classpath("org.asciidoctor:asciidoctor-gradle-plugin:1.5.2")
@@ -9,7 +12,7 @@ buildscript {
 		classpath("ws.antonov.gradle.plugins:gradle-plugin-protobuf:0.9.1")
 	}
 }
-
+//扩展属性
 ext {
 	linkHomepage = 'https://projects.spring.io/spring-framework'
 	linkCi = 'https://build.spring.io/browse/SPR'
